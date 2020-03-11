@@ -2,45 +2,32 @@ import pyglet
 
 win = pyglet.window.Window(fullscreen=True)
 
-animation = pyglet.image.load_animation('images/assets/ground/snow_fall3.gif')
-fall = pyglet.sprite.Sprite(animation, x=0, y=0)
-fall.scale = 5
+t = 10
+timerLabel = pyglet.text.Label(str(t), font_size=65,
+                                       x=win.width // 15,
+                                       y=win.height // 1.05,
+                                       anchor_x='center', anchor_y='center')
 
-green= pyglet.image.load('images/assets/Green/greenfront.png')
-greenup= pyglet.image.load('images/assets/Green/greenbackwalk2.png')
-greendown= pyglet.image.load('images/assets/Green/greendown1.png')
-greenleft= pyglet.image.load('images/assets/Green/greenleftwalk2.png')
-greenright= pyglet.image.load('images/assets/Green/greenrightwalk2.png')
-play1 = pyglet.sprite.Sprite(green, x=0, y =0)
-play1.scale = 2
+corner1= pyglet.image.load('images/assets/ground/tundra/slice01_01.png')
 
-keys = pyglet.window.key.KeyStateHandler()
+grey = []
+for i in range(14):
+    for j in range(10):
+        grey.append(pyglet.sprite.Sprite(corner1, x = i * 48, y = j * 50))
 
 def update(dt):
-    win.push_handlers(keys) # update the key object
-    play1.image = green
-    if keys[pyglet.window.key.UP]:
-        print("Moving Up")
-        play1.image = greenup
-        play1.y+=5
-    if keys[pyglet.window.key.DOWN]:
-        print("Moving Down")
-        play1.image = greendown
-        play1.y-=5
-    if keys[pyglet.window.key.LEFT]:
-        print("Moving Left")
-        play1.image = greenleft
-        play1.x-=5
-    if keys[pyglet.window.key.RIGHT]:
-        print("Moving Right")
-        play1.image = greenright
-        play1.x+=5
+    global t
+    t -= dt
+    timerLabel.text = str(round(t))
+    #if t == 0 :
+        
 
 @win.event
 def on_draw():
     win.clear()
-    fall.draw()
-    play1.draw()
+    timerLabel.draw()
+    for i in range(140):
+        grey[i].draw()
 
 pyglet.clock.schedule(update)
 pyglet.app.run()
