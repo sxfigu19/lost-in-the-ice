@@ -17,6 +17,9 @@ c3 = pyglet.sprite.Sprite(corner3, x=1850, y=0)
 corner4= pyglet.image.load('images/assets/ground/tundra/slice20_202.png')
 c4 = pyglet.sprite.Sprite(corner4, x=0, y=0)
 
+middle= pyglet.image.load('images/assets/ground/tundra/slice33_33.png')
+ground = pyglet.sprite.Sprite(middle, x=0, y=0)
+
 bottom= pyglet.image.load('images/assets/ground/tundra/slice03_032.png')
 bot = pyglet.sprite.Sprite(bottom, x=55, y=0)
 top= pyglet.image.load('images/assets/ground/tundra/slice03_03.png')
@@ -30,8 +33,9 @@ def update(dt):
     global t
     t -= dt
     timerLabel.text = str(round(t))
-    #if t == 0 :
-        
+    #if (t == 0):
+        #t=False
+            
 low = []
 for i in range(26):
         low.append(pyglet.sprite.Sprite(bottom, x = i * 70 + 70, y = 0))
@@ -44,6 +48,10 @@ for j in range(26):
 right = []
 for j in range(26):
        right.append(pyglet.sprite.Sprite(side2, x = 1850, y = j * 35 + 70))
+mid = []
+for i in range(26):
+    for j in range(26):
+        mid.append(pyglet.sprite.Sprite(middle, x = i * 70 + 70, y = j * 35 + 70))
 
 @win.event
 def on_draw():
@@ -60,6 +68,8 @@ def on_draw():
         left[j].draw()
     for j in range(26):   
         right[j].draw()    
+    for i in range(676):
+        mid[i].draw()
     timerLabel.draw()
 
 pyglet.clock.schedule(update)
